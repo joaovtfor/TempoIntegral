@@ -1,1 +1,6 @@
-# TempoIntegral
+# Projeto Tempo Integral
+
+Based on React + Laravel, this project was made for the new idea of school management.
+The so-called **Tempo Integral Project** was created for the purpose of creating a different way to integrate the different types of data, including many different modules. The system has 100% responsiveness, alowing the user to run both web and mobile applications.
+
+Projected and Structured by João Vitor de For dos Santos.
