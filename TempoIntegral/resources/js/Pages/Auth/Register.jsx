@@ -1,120 +1,241 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
+import styled from 'styled-components';
 
-export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
+import InputLabel from '@/Components/InputLabel';
+import { useForm, usePage } from '@inertiajs/react';
+import TextInput from '@/Components/TextInput';
+import InputError from '@/Components/InputError';
+import Checkbox from '@/Components/Checkbox';
+import PrimaryButton from '@/Components/PrimaryButton';
+import SectionTitle from '@/Components/SectionTitle';
+
+const Section = styled.div`
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+`;
+
+const Register = () => {
+  const page = usePage();
+
+  const { data, setData, post, processing, errors, reset } =
+    useForm({
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
+      terms: true,
     });
 
-    const submit = (e) => {
-        e.preventDefault();
+  const submit = (e) => {
+    e.preventDefault();
+    post(route('register'), {
+      onFinish: () => reset('password', 'password_confirmation'),
+    });
+  };
 
-        post(route('register'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
-    };
+  return (
+    <AuthenticatedLayout
+      title="Cadastro > Usuários"
+    >
+      <div className='w-full h-full flex flex-col item-center justify-center'>
+        <form onSubmit={submit} className='w-full h-full px-10 py-2 pb-4 flex flex-col gap-y-14'>
+          <Section>
+            <div className='w-full ml-7 mt-3'>
+              <SectionTitle className='text-xl' title="Informações do usuário" />
+            </div>
 
-    return (
-        <GuestLayout>
-            <Head title="Register" />
+            <div className='w-full h-auto flex flex-wrap items-center justify-around pb-5 px-5'>
+              <div className='mt-4'>
+                <InputLabel htmlFor="name" value="Nome" />
+                <TextInput
+                  id="name"
+                  value={data.name}
+                  onChange={(e) => setData('name', e.target.value)}
+                  type="text"
+                  className="block w-full mt-1"
+                  required
+                  autoFocus
+                  autoComplete="name"
+                />
+                <InputError className="mt-2" message={errors.name} />
+              </div>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+              <div className="mt-4">
+                <InputLabel htmlFor="email" value="Email" />
+                <TextInput
+                  id="email"
+                  value={data.email}
+                  onChange={(e) => setData('email', e.target.value)}
+                  type="email"
+                  className="block w-full mt-1"
+                  required
+                  autoComplete="username"
+                />
+                <InputError className="mt-2" message={errors.email} />
+              </div>
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
-                        required
-                    />
+              <div className="mt-4">
+                <InputLabel htmlFor="password" value="Senha" />
+                <TextInput
+                  id="password"
+                  value={data.password}
+                  onChange={(e) =>
+                    setData('password', e.target.value)
+                  }
+                  type="password"
+                  className="block w-full mt-1"
+                  required
+                  autoComplete="new-password"
+                />
+                <InputError
+                  className="mt-2"
+                  message={errors.password}
+                />
+              </div>
 
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
+              <div className="mt-4">
+                <InputLabel
+                  htmlFor="password_confirmation"
+                  value="Confirme a senha"
+                />
+                <TextInput
+                  id="password_confirmation"
+                  value={data.password_confirmation}
+                  onChange={(e) =>
+                    setData('password_confirmation', e.target.value)
+                  }
+                  type="password"
+                  className="block w-full mt-1"
+                  required
+                  autoComplete="new-password"
+                />
+                <InputError
+                  className="mt-2"
+                  message={errors.password_confirmation}
+                />
+              </div>
+            </div>
+          </Section>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+          <Section>
+              <div className='w-full ml-7 mt-3'>
+                <SectionTitle className='text-xl' title="Permissões de usuário (WIP - Não implementado)" />
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
+                <div className='h-auto flex items-center justify-around flex-wrap flex-1/3 pb-5 px-5'>
+                  <div className="block mt-4">
+                    <label className="flex items-center">
+                      <Checkbox
+                        name="remember"
+                        // checked={data.remember}
                         onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
+                          console.log("Teste")
+                          // setData('remember', e.target.checked)
                         }
-                        required
-                    />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
+                      />
+                      <span className="ms-2 text-sm text-theme-blue-2 dark:text-gray-400">
+                        Coordenação Geral
+                      </span>
+                    </label>
+                  </div>
+                  <div className="block mt-4">
+                    <label className="flex items-center">
+                      <Checkbox
+                        name="remember"
+                        // checked={data.remember}
+                        onChange={(e) =>
+                          console.log("Teste")
+                          // setData('remember', e.target.checked)
+                        }
+                      />
+                      <span className="ms-2 text-sm text-theme-blue-2 dark:text-gray-400">
+                        Coordenação Geral
+                      </span>
+                    </label>
+                  </div>
+                  <div className="block mt-4">
+                    <label className="flex items-center">
+                      <Checkbox
+                        name="remember"
+                        // checked={data.remember}
+                        onChange={(e) =>
+                          console.log("Teste")
+                          // setData('remember', e.target.checked)
+                        }
+                      />
+                      <span className="ms-2 text-sm text-theme-blue-2 dark:text-gray-400">
+                        Coordenação Geral
+                      </span>
+                    </label>
+                  </div>
+                  <div className="block mt-4">
+                    <label className="flex items-center">
+                      <Checkbox
+                        name="remember"
+                        // checked={data.remember}
+                        onChange={(e) =>
+                          console.log("Teste")
+                          // setData('remember', e.target.checked)
+                        }
+                      />
+                      <span className="ms-2 text-sm text-theme-blue-2 dark:text-gray-400">
+                        Coordenação Geral
+                      </span>
+                    </label>
+                  </div>
+                  <div className="block mt-4">
+                    <label className="flex items-center">
+                      <Checkbox
+                        name="remember"
+                        // checked={data.remember}
+                        onChange={(e) =>
+                          console.log("Teste")
+                          // setData('remember', e.target.checked)
+                        }
+                      />
+                      <span className="ms-2 text-sm text-theme-blue-2 dark:text-gray-400">
+                        Coordenação Geral
+                      </span>
+                    </label>
+                  </div>
+                  <div className="block mt-4">
+                    <label className="flex items-center">
+                      <Checkbox
+                        name="remember"
+                        // checked={data.remember}
+                        onChange={(e) =>
+                          console.log("Teste")
+                          // setData('remember', e.target.checked)
+                        }
+                      />
+                      <span className="ms-2 text-sm text-theme-blue-2 dark:text-gray-400">
+                        Coordenação Geral
+                      </span>
+                    </label>
+                  </div>
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
-                    <Link
-                        href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                    >
-                        Already registered?
-                    </Link>
+              </div>
 
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
-    );
+            </Section>
+          <div className="flex items-center justify-end">
+            <PrimaryButton
+              className={`ms-4 ${processing ? 'opacity-25' : ''}`}
+              disabled={processing}
+            >
+              Salvar
+            </PrimaryButton>
+          </div>
+        </form>
+      </div>
+    </AuthenticatedLayout >
+  )
 }
+
+export default Register
