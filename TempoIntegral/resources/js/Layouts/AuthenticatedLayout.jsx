@@ -5,21 +5,22 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function AuthenticatedLayout({ header, children }) {
+export default function AuthenticatedLayout({ title, children }) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <nav className="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 justify-between">
+      <>
+        <header className="bg-white h-auto dark:bg-gray-900">
+            <nav className="w-full bg-white shadow-md dark:bg-gray-800 mb-1 fixed z-10">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white">
+                    <div className="flex h-24 justify-between bg-white">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                    <ApplicationLogo className="block h-auto w-24 text-gray-800 dark:text-gray-200" />
                                 </Link>
                             </div>
 
@@ -28,7 +29,15 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
-                                    Dashboard
+                                    Home
+                                </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink
+                                    href={route('register')}
+                                    active={route().current('register')}
+                                >
+                                    Users Register
                                 </NavLink>
                             </div>
                         </div>
@@ -161,16 +170,15 @@ export default function AuthenticatedLayout({ header, children }) {
                     </div>
                 </div>
             </nav>
-
-            {header && (
-                <header className="bg-white shadow dark:bg-gray-800">
-                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
-            )}
-
-            <main>{children}</main>
-        </div>
+          </header>
+          <main className='bg-background w-full'>
+            {title && (
+                  <div className="mx-auto text-theme-blue-2 font-black text-xl max-w-7xl px-4 py-4 pt-28 sm:px-6 lg:px-4">
+                      {title}
+                  </div>
+              )}
+              {children}
+          </main>
+      </>
     );
 }
