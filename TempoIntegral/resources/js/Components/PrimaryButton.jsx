@@ -1,14 +1,11 @@
-export default function PrimaryButton({
-    className = '',
-    disabled,
-    children,
-    ...props
-}) {
+import { ButtonHTMLAttributes } from 'react';
+
+export default function PrimaryButton({ className = '', disabled, children, ...props }) {
     return (
         <button
             {...props}
             className={
-                `inline-flex items-center rounded-md border border-transparent bg-gray-800 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-gray-900 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-white dark:focus:bg-white dark:focus:ring-offset-gray-800 dark:active:bg-gray-300 ${
+                `inline-flex items-center px-10 py-2 bg-theme-blue-2 dark:bg-gray-200 border border-transparent rounded-3xl font-semibold text-xs text-white dark:text-white uppercase tracking-widest hover:bg-theme-blue-lighter dark:hover:bg-theme-blue-lighter focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ${
                     disabled && 'opacity-25'
                 } ` + className
             }
