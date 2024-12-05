@@ -21,23 +21,19 @@ const Section = styled.div`
   padding-bottom: 5px;
 `;
 
-const Register = () => {
+const UserEdit = ({user}) => {
   const page = usePage();
 
-  const { data, setData, post, processing, errors, reset } =
+  const { data, setData, put, processing, errors, reset } =
     useForm({
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: '',
-      terms: true,
+      id: user.id || '',
+      name: user.name ||'',
+      email: user.email || '',
     });
 
   const submit = (e) => {
     e.preventDefault();
-    post(route('register'), {
-      onFinish: () => reset('password', 'password_confirmation'),
-    });
+    put(route('users.update', {user: user.id}));
   };
 
   return (
@@ -76,7 +72,6 @@ const Register = () => {
                   onChange={(e) => setData('email', e.target.value)}
                   type="email"
                   className="block w-full mt-1"
-                  required
                   autoComplete="username"
                 />
                 <InputError className="mt-2" message={errors.email} />
@@ -92,8 +87,8 @@ const Register = () => {
                   }
                   type="password"
                   className="block w-full mt-1"
-                  required
                   autoComplete="new-password"
+                  disabled={true}
                 />
                 <InputError
                   className="mt-2"
@@ -114,7 +109,7 @@ const Register = () => {
                   }
                   type="password"
                   className="block w-full mt-1"
-                  required
+                  disabled={true}
                   autoComplete="new-password"
                 />
                 <InputError
@@ -239,4 +234,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default UserEdit
