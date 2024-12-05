@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import styled from 'styled-components';
 
 import InputLabel from '@/Components/InputLabel';
-import { useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage, Head } from '@inertiajs/react';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 import Checkbox from '@/Components/Checkbox';
@@ -44,6 +44,7 @@ const Register = () => {
     <AuthenticatedLayout
       title="Cadastro > Usuários"
     >
+      <Head title='Cadastro de Usuários'/>
       <div className='w-full h-full flex flex-col item-center justify-center'>
         <form onSubmit={submit} className='w-full h-full px-10 py-2 pb-4 flex flex-col gap-y-14'>
           <Section>

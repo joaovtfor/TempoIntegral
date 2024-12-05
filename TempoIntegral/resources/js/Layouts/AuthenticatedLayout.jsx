@@ -127,8 +127,8 @@ export default function AuthenticatedLayout({ title, children }) {
                             Home
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            href={route('register')}
-                            active={route().current('register')}
+                            href={route('users.index')}
+                            active={route().current('users.index')}
                         >
                             Users
                         </ResponsiveNavLink>
