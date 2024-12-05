@@ -1,5 +1,6 @@
 import Pagination from "@/Components/Pagination";
 import PrimaryButton from "@/Components/PrimaryButton";
+import DeleteButton from "@/Components/DeleteButton";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react"
 
@@ -33,9 +34,7 @@ const UserIndex = ({users}) => {
                 <Link href={route('users.edit', {id: user.id})}>
                     <PrimaryButton className="my-2 ms-1">Editar</PrimaryButton>
                 </Link>
-                {/* <Link href={route('users.show', {id: user.id})}>
-                    <PrimaryButton className="my-2 ms-1">Editar</PrimaryButton>
-                </Link> */}
+                <DeleteButton id={user.id} routeName="users.destroy"></DeleteButton>
               </tr>
             ))}
           </tbody>
